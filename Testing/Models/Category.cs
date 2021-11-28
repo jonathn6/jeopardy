@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace Testing
 {
-    public interface IProductRepository
+    public class Category
     {
-        public IEnumerable<Product> GetAllProducts();
+        public int ID { get; set; }
+        public string title { get; set; }
+
     }
 }

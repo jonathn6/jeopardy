@@ -27,12 +27,13 @@ namespace Testing
         {
             services.AddScoped<IDbConnection>((s) =>
             {
-                IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("bestbuy"));
+                IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("jeopardy"));
                 conn.Open();
                 return conn;
             });
 
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<IPlayerRepository, PlayerRepository>();
 
             services.AddControllersWithViews();
         }

@@ -1,0 +1,39 @@
+﻿
+@model dynamic
+
+<h2>Categories</h2>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+    </tr>
+
+    @foreach (var category in Model.category)
+    {
+        <tr>
+            <td>@category.ID</td>
+            <td>@category.title</td>
+        </tr>
+    }
+</table>
+
+<h2>Questions</h2>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>question</th>
+        <th>answer</th>
+        <th>value</th>
+    </tr>
+
+    @foreach (var question in Model.question)
+    {
+        <tr>
+            <td>@question.category_id</td>
+            <td>@question.question</td>
+            <td>@question.answer</td>
+            <td>@question.Value</td>
+        </tr>
+    }
+</table>

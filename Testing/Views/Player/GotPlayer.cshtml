@@ -1,0 +1,30 @@
+﻿
+@model Testing.Player
+
+<h1>Player</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @Model.FirstName
+        @*<form asp-action="Player">
+                <div class="form-group">
+
+                    @if (Model.GamesStarted == 0)
+            {
+                <label class="control-label">Welcome @Model.FirstName</label>
+            }
+            else
+            {
+                <label class="control-label">Welcome back @Model.FirstName</label>
+            }
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                    </form>*@
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Get ready to play!</a>
+</div>
+
