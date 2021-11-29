@@ -1,30 +1,47 @@
 ﻿
 @model Testing.Player
+<body>
+    @using (Html.BeginForm("Index", "Category", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-6">
 
-<h1>Player</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        @Model.FirstName
-        @*<form asp-action="Player">
-                <div class="form-group">
-
-                    @if (Model.GamesStarted == 0)
-            {
-                <label class="control-label">Welcome @Model.FirstName</label>
-            }
-            else
-            {
-                <label class="control-label">Welcome back @Model.FirstName</label>
-            }
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-                    </form>*@
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Get ready to play!</a>
-</div>
+                <form asp-action="Player">
+                    <div class="form-group">
+                        @if (Model.GamesStarted == 0)
+                        {
+                            <div class="form-group">
+                                <label class="control-label">Welcome @Model.FirstName! I see this is your first time playing.  Its really very simple. I will display 5 questions for you.  I will also provide you with the answers.  You need to match up the questions with the answers.  Simple, right?  Click on the 'Lets Play!' button below to begin!</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" value="@Model.LastName" name="LastName"/>
+                                <input type="hidden" value="@Model.FirstName" name="FirstName"/>
+                                <input type="hidden" value="@Model.GamesWon" name="GamesWon"/>
+                                <input type="hidden" value="@Model.GamesLost" name="GamesLost"/>
+                                <input type="hidden" value="@Model.GamesStarted" name="GamesStarted"/>
+                                <input type="hidden" value="@Model.TotalWinnings" name="TotalWinnings"/>
+                                <input type="submit" value="Lets play!" class="btn btn-primary" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="control-label">Welcome back @Model.FirstName! Since you have played before, I won''t bother going over the instructions.  Based on your past playing, you have accumulated @Model.TotalWinnings points.  Click on the 'Continue' button below to get back to it! </label>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" value="@Model.LastName" name="LastName" />
+                                <input type="hidden" value="@Model.FirstName" name="FirstName" />
+                                <input type="hidden" value="@Model.GamesWon" name="GamesWon" />
+                                <input type="hidden" value="@Model.GamesLost" name="GamesLost" />
+                                <input type="hidden" value="@Model.GamesStarted" name="GamesStarted" />
+                                <input type="hidden" value="@Model.TotalWinnings" name="TotalWinnings" />
+                                <input type="submit" value="Continue" class="btn btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+</body>
 

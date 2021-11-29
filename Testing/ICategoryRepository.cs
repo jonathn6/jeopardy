@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Testing
 {
-    public interface IGameRepository
+    public interface ICategoryRepository
     {
-        public IEnumerable<Category> GetGameCategory();
-        public int GetGameCategoryID(string categoryTitle);
+        public IEnumerable<Category> GetAllCategory();
         public void InsertDeleteCategory(string WhichFunction, int Category, string CategoryTitle);
         public IEnumerable<Question> GetGameQuestions(int CategoryID);
         public void InsertDeleteQuestion(string WhichFunction, Question QuestionToInsert, int CategoryID);

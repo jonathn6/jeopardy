@@ -34,6 +34,7 @@ namespace Testing
 
             services.AddTransient<IGameRepository, GameRepository>();
             services.AddTransient<IPlayerRepository, PlayerRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
 
             services.AddControllersWithViews();
         }

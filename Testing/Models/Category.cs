@@ -8,7 +8,7 @@ namespace Testing
     public class Category
     {
         public int ID { get; set; }
-        public string title { get; set; }
+        public string Title { get; set; }
 
     }
 }

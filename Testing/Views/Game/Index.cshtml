@@ -1,23 +1,8 @@
 ﻿
 @model dynamic
 
-<h2>Categories</h2>
+<h3>@Model.Game.PlayerData.FirstName, here are your questions in the category <br /> @Model.Game.CategoryData.Title</h3>
 
-<table class="table">
-    <tr>
-        <th>ID</th>
-    </tr>
-
-    @foreach (var category in Model.category)
-    {
-        <tr>
-            <td>@category.ID</td>
-            <td>@category.title</td>
-        </tr>
-    }
-</table>
-
-<h2>Questions</h2>
 
 <table class="table">
     <tr>
@@ -27,7 +12,7 @@
         <th>value</th>
     </tr>
 
-    @foreach (var question in Model.question)
+    @foreach (var question in Model.Question)
     {
         <tr>
             <td>@question.category_id</td>

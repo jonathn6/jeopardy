@@ -22,11 +22,6 @@ namespace Testing.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public ActionResult Test()
-        {
-            return View("GotInitial", new Player { FirstName = "John" });
-        }
 
         [HttpPost]
         public ActionResult GotPlayer (Player person)

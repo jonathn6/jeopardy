@@ -1,0 +1,24 @@
+﻿@model dynamic
+<body>
+    @using (Html.BeginForm("Index", "Game", FormMethod.Post))
+    {
+        <h2>OK, @Model.player.FirstName, please select one of the categories below</h2>
+        <hr />
+        <div class="row">
+            @foreach (var category in Model.category)
+            {
+                <div class="col-md-6">
+                    <div class="form-group" style="width:100%">
+                        <input type="hidden" value="@Model.player.LastName" name="LastName" />
+                        <input type="hidden" value="@Model.player.FirstName" name="FirstName" />
+                        <input type="hidden" value="@Model.player.GamesWon" name="GamesWon" />
+                        <input type="hidden" value="@Model.player.GamesLost" name="GamesLost" />
+                        <input type="hidden" value="@Model.player.GamesStarted" name="GamesStarted" />
+                        <input type="hidden" value="@Model.player.TotalWinnings" name="TotalWinnings" />
+                        <input type="submit" value="@category.Title" class="btn btn-primary btn-block" name="Title" />
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</body>

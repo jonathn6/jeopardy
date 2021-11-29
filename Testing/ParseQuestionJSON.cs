@@ -8,7 +8,7 @@ namespace Testing
 {
     public class ParseQuestionJSON
     {
-        public void ParseQuestion(IGameRepository passedRepo, string[] passedArray)
+        public void ParseQuestion(ICategoryRepository passedRepo, string[] passedArray)
         {
             var exitloop = false;
             var loopCounter = -1;

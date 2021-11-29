@@ -7,47 +7,16 @@ using System.Threading.Tasks;
 
 namespace Testing
 {
-    public class GameRepository : IGameRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly IDbConnection _conn;
-        public GameRepository(IDbConnection conn)
+        public CategoryRepository(IDbConnection conn)
         {
             _conn = conn;
         }
-        public IEnumerable<Category> GetGameCategory()
+        public IEnumerable<Category> GetAllCategory()
         {
             return _conn.Query<Category>("SELECT * FROM jeopardy.CATEGORY");
-        }
-        public int GetGameCategoryID(string passedTitle)
-        {
-            var SQL = "SELECT ID FROM jeopardy.CATEGORY WHERE Title Like '%" + passedTitle + "%'";
-            return _conn.QuerySingle<int>(SQL);
-        }
-        public void InsertDeleteCategory(string passedWhich, int passedID, string passedTitle)
-        {
-            switch (passedWhich) 
-            {
-
-                case "I":
-                    _conn.Execute("INSERT INTO jeopardy.category (ID, Title) VALUES (@id, @title);",
-                       new
-                       {
-                           ID = passedID,
-                           title = passedTitle
-                       });
-                    break;
-                case "D":
-                    if (passedID == 0)
-                    {
-                        _conn.Execute("DELETE FROM jeopardy.category");
-                    } else
-                    {
-                        var SQL = "DELETE FROM jeopardy.category WHERE ID = " + passedID;
-                        _conn.Execute(SQL);
-                    }
-                    break;
-
-            }
         }
 
         public IEnumerable<Question> GetGameQuestions(int passedCategory)
@@ -65,30 +34,60 @@ namespace Testing
             return _conn.Query<Question>(SQL);
         }
 
+        public void InsertDeleteCategory(string passedWhich, int passedID, string passedTitle)
+        {
+            switch (passedWhich)
+            {
+
+                case "I":
+                    _conn.Execute("INSERT INTO jeopardy.category (ID, Title) VALUES (@id, @title);",
+                       new
+                       {
+                           ID = passedID,
+                           title = passedTitle
+                       }); ;
+                    break;
+                case "D":
+                    if (passedID == 0)
+                    {
+                        _conn.Execute("DELETE FROM jeopardy.category");
+                    }
+                    else
+                    {
+                        var SQL = "DELETE FROM jeopardy.category WHERE ID = " + passedID;
+                        _conn.Execute(SQL);
+                    }
+                    break;
+
+            }
+        }
+
         public void InsertDeleteQuestion(string passedWhich, Question QuestionToInsert, int CategoryID)
         {
             switch (passedWhich)
             {
                 case "I":
                     _conn.Execute("INSERT INTO jeopardy.questions (Question, Answer, Category_ID, Value) VALUES (@question, @answer, @category, @dvalue);",
-                    new { question = QuestionToInsert.question, 
-                            answer = QuestionToInsert.answer,
-                            category = QuestionToInsert.category_id,
-                            dvalue = QuestionToInsert.Value
+                    new
+                    {
+                        question = QuestionToInsert.question,
+                        answer = QuestionToInsert.answer,
+                        category = QuestionToInsert.category_id,
+                        dvalue = QuestionToInsert.Value
                     });
                     break;
                 case "D":
                     if (CategoryID == 0)
                     {
                         _conn.Execute("DELETE FROM jeopardy.questions");
-                    } else
+                    }
+                    else
                     {
                         _conn.Execute("DELETE FROM jeopardy.questions WHERE Category_ID = @catID;",
-                            new { catID = CategoryID});
+                            new { catID = CategoryID });
                     }
                     break;
             }
         }
-
     }
 }
