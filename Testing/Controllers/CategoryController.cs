@@ -91,12 +91,12 @@ namespace Testing.Controllers
                 //
                 // Deserialize the string into the categoryToAdd class
                 //
-                CategoryTitle categoryToAdd = JsonConvert.DeserializeObject<CategoryTitle>(getCategoryArray[0]);
+                Category categoryToAdd = JsonConvert.DeserializeObject<Category>(getCategoryArray[0]);
                 //
                 // We have isolated the fields needed to insert them into the category table. Call the InsertDeleteCategory method with instructions
                 // to insert the category ID and the category Title into the database
                 //
-                repo.InsertDeleteCategory("I", categoryToAdd.id, categoryToAdd.title);
+                repo.InsertDeleteCategory("I", categoryToAdd.ID, categoryToAdd.Title);
                 //
                 // Now parse the back half of the returned data which contains the individual questions and answers information
                 //
@@ -111,7 +111,7 @@ namespace Testing.Controllers
                 //
                 // Retrieve all the question records from the database
                 //
-                var questionsForCategory = repo.GetGameQuestions(categoryToAdd.id);
+                var questionsForCategory = repo.GetGameQuestions(categoryToAdd.ID);
                 //
                 // for each record retrieved, check to verify that the question is of least a length of 3.  If it is, assume it is a valid record and
                 // bump a counter.  
@@ -130,8 +130,8 @@ namespace Testing.Controllers
                 //
                 if (countValidRecords != 5)
                 {
-                    repo.InsertDeleteCategory("D", categoryToAdd.id, "");
-                    repo.InsertDeleteQuestion("D", null, categoryToAdd.id);
+                    repo.InsertDeleteCategory("D", categoryToAdd.ID, "");
+                    repo.InsertDeleteQuestion("D", null, categoryToAdd.ID);
                 }
                 else
                 {
