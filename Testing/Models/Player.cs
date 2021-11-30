@@ -16,5 +16,6 @@ namespace Testing
         public int QuestionsWrong { get; set; }
         public int TotalQuestions { get; set; }
         public int TotalWinnings { get; set; }
+        public bool NewPlayer { get; set; }
     }
 }

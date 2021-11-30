@@ -104,5 +104,17 @@ namespace Testing
                                     totalq = person.TotalQuestions,
                                     totalw = person.TotalWinnings});
         }
+
+        public string GetFirstCategoryID()
+        {
+            var SQL = "SELECT Title FROM jeopardy.CATEGORY";
+            try
+            {
+                return _conn.QueryFirst<String>(SQL);
+            } catch
+            {
+                return "";
+            }
+        }
     }
 }

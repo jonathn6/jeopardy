@@ -22,10 +22,12 @@ namespace Testing
             {
                 var SQL = "SELECT * FROM jeopardy.player WHERE LastName LIKE '" + passedLastName + "' AND FirstName LIKE '" + passedFirstName + "'";
                 nullPlayer = _conn.QuerySingle<Player>(SQL);
+                nullPlayer.NewPlayer = false;
 
             } catch(Exception e) {
                 nullPlayer.FirstName = e.Message;
                 nullPlayer.LastName = null;
+                nullPlayer.NewPlayer = true;
             }
             
             return nullPlayer;

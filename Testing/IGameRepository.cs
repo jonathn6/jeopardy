@@ -9,6 +9,7 @@ namespace Testing
     {
         public IEnumerable<Category> GetGameCategory();
         public int GetGameCategoryID(string categoryTitle);
+        public string GetFirstCategoryID();
         public void InsertDeleteCategory(string WhichFunction, int Category, string CategoryTitle);
         public IEnumerable<Question> GetGameQuestions(int CategoryID);
         public void InsertDeleteQuestion(string WhichFunction, Question QuestionToInsert, int CategoryID);

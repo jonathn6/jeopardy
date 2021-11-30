@@ -21,6 +21,14 @@ namespace Testing.Controllers
             this.repo = repo;
         }
         [HttpPost]
+        public ActionResult AnotherRound(Player person)
+        {
+            dynamic mymodel = new ExpandoObject();
+            mymodel.category = repo.GetGameCategory();
+            mymodel.player = person;
+            return View(mymodel);
+        }
+        [HttpPost]
         public ActionResult VerifyAnswers(IFormCollection form, [FromForm] FormData p)
         {
             //
@@ -38,7 +46,7 @@ namespace Testing.Controllers
             {
                 var elementName = Int32.Parse(formElementNames[r].Substring(1, 4));
                 dbAnswer[r] = repo.GetSingleAnswer(elementName);
-                userAnswer[r] = form[formElementNames[r]].ToString();
+                userAnswer[r] = form[formElementNames[r]].ToString().Trim();
             }
 
 
@@ -91,42 +99,88 @@ namespace Testing.Controllers
             result = userAnswer[3].ToLower() == dbAnswer[3].answer.ToLower() ? gameSummary.gotQuestion4Right = true : gameSummary.gotQuestion4Right = false;
             result = userAnswer[4].ToLower() == dbAnswer[4].answer.ToLower() ? gameSummary.gotQuestion5Right = true : gameSummary.gotQuestion5Right = false;
 
+            gameSummary.DBQuestion1 = dbAnswer[0].question;
+            gameSummary.DBQuestion2 = dbAnswer[1].question;
+            gameSummary.DBQuestion3 = dbAnswer[2].question;
+            gameSummary.DBQuestion4 = dbAnswer[3].question;
+            gameSummary.DBQuestion5 = dbAnswer[4].question;
 
+            gameSummary.DBAnswer1 = dbAnswer[0].answer;
+            gameSummary.DBAnswer2 = dbAnswer[1].answer;
+            gameSummary.DBAnswer3 = dbAnswer[2].answer;
+            gameSummary.DBAnswer4 = dbAnswer[3].answer;
+            gameSummary.DBAnswer5 = dbAnswer[4].answer;
+
+            gameSummary.DBValue1 = dbAnswer[0].Value;
+            gameSummary.DBValue2 = dbAnswer[1].Value;
+            gameSummary.DBValue3 = dbAnswer[2].Value;
+            gameSummary.DBValue4 = dbAnswer[3].Value;
+            gameSummary.DBValue5 = dbAnswer[4].Value;
+            var rsult = "";
+
+            if (userAnswer[0].ToLower() == dbAnswer[0].answer.ToLower())
+            {
+                userAnswer[0] = "Your answer of " + dbAnswer[0].answer + " is correct!";
+            } else
+            {
+                rsult = userAnswer[0].Length > 0 ? gameSummary.UserAnswer1 = "Sorry, but your answer of " + userAnswer[0] + " is incorrect." : gameSummary.UserAnswer1 = "You did not provide an answer so obviously, your answer is incorrect";
+            }
+            //
+            //
+            //
+            if (userAnswer[1].ToLower() == dbAnswer[1].answer.ToLower())
+            {
+                userAnswer[1] = "Your answer of " + dbAnswer[1].answer + " is correct!";
+            }
+            else
+            {
+                rsult = userAnswer[1].Length > 0 ? gameSummary.UserAnswer2 = "Sorry, but your answer of " + userAnswer[1] + " is incorrect." : gameSummary.UserAnswer2 = "A blank answer is no answer so, your answer is incorrect";
+            }
+            //
+            //
+            //
+            if (userAnswer[2].ToLower() == dbAnswer[2].answer.ToLower())
+            {
+                userAnswer[2] = "Your answer of " + dbAnswer[2].answer + " is correct!";
+            }
+            else
+            {
+                rsult = userAnswer[2].Length > 0 ? gameSummary.UserAnswer3 = "Sorry, but your answer of " + userAnswer[2] + " is incorrect." : gameSummary.UserAnswer3 = "Your answer was empty so your answer is incorrect";
+            }//
+             //
+             //
+            if (userAnswer[3].ToLower() == dbAnswer[3].answer.ToLower())
+            {
+                userAnswer[3] = "Your answer of " + dbAnswer[3].answer + " is correct!";
+            }
+            else
+            {
+                rsult = userAnswer[3].Length > 0 ? gameSummary.UserAnswer4 = "Sorry, but your answer of " + userAnswer[3] + " is incorrect." : gameSummary.UserAnswer4 = "I was not expecting that!";
+            }
+            //
+            //
+            //
+            if (userAnswer[4].ToLower() == dbAnswer[4].answer.ToLower())
+            {
+                userAnswer[4] = "Your answer of " + dbAnswer[4].answer + " is correct!";
+            }
+            else
+            {
+                rsult = userAnswer[4].Length > 0 ? gameSummary.UserAnswer5 = "Sorry, but your answer of " + userAnswer[4] + " is incorrect." : gameSummary.UserAnswer5 = "You didnt really expect to get credit for an empty answer, did you?";
+            }
+            //
+            //
+            //
             repo.InsertDeleteQuestion("D", null, p.CategoryID);
             return View(gameSummary);
         }
         [HttpPost]
         public IActionResult Index(Player person, Category passedCategory)
         {
-            //
-            // create an objet which will be passed to the view.  The object will contain data for a single category, a single player, and a set of questions and answers
-            //
-            var newGame = new Game();
-            newGame.CategoryData = new Category();
-            newGame.PlayerData = new Player();
+            var newSetUp = new CategorySetup();
+            var newGame = newSetUp.SetUpCategory(repo, person, passedCategory);
 
             //
-            // store the category informatin in the object
-            //
-            newGame.CategoryData.Title = passedCategory.Title;
-            newGame.CategoryData.ID = repo.GetGameCategoryID(passedCategory.Title);
-            //
-            // delete the category records from the database so the same category is not selected again
-            //
-            repo.InsertDeleteCategory("D", newGame.CategoryData.ID, "");
-            //
-            // store the player infrormation in the object
-            //
-            newGame.PlayerData = person;
-            //
-            // call the GetGameQuestions function to retrieve all the questions and answers for the selected category and store that inforamtion in the object
-            //
-            newGame.QuestionData = repo.GetGameQuestions(newGame.CategoryData.ID);
-            //
-            //
-            //
-            //dynamic mymodel = new ExpandoObject();
-            //mymodel.Game = newGame;
             //
             // send the object to the view
             //

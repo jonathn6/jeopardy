@@ -1,0 +1,45 @@
+﻿@model dynamic
+<body>
+    @if (Model.category.count > 0)
+    {
+        @using (Html.BeginForm("Index", "Game", FormMethod.Post))
+        {
+            <h2>OK, @Model.player.FirstName, please select one of the categories below</h2>
+            <hr />
+            <div class="row">
+                @foreach (var category in Model.category)
+                {
+                    <div class="col-md-6">
+                        <div class="form-group" style="width:100%">
+                            <input type="hidden" value="@Model.player.LastName" name="LastName" />
+                            <input type="hidden" value="@Model.player.FirstName" name="FirstName" />
+                            <input type="hidden" value="@Model.player.QuestionsRight" name="QuestionsRight" />
+                            <input type="hidden" value="@Model.player.QuestionsWrong" name="QuestionsWrong" />
+                            <input type="hidden" value="@Model.player.TotalQuestions" name="TotalQuestions" />
+                            <input type="hidden" value="@Model.player.TotalWinnings" name="TotalWinnings" />
+                            <input type="submit" value="@category.Title" class="btn btn-primary btn-block" name="Title" />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+    @if (Model.category.count == 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <p>Thanks for playing, @Model.player.FirstName.  Want to know how you did?</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>You were asked a total of @Model.player.TotalQuestions.  Out of thoses, you answered correctly @Model.player.QuestionsRight times.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>Your score for this game was @Model.player.TotalWinnings</p>
+            </div>
+        </div>
+    }
+</body>

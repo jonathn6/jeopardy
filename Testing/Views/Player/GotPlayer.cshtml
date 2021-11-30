@@ -8,10 +8,10 @@
 
                 <form asp-action="Player">
                     <div class="form-group">
-                        @if (Model.TotalQuestions == 0)
+                        @if (Model.NewPlayer == true)
                         {
                             <div class="form-group">
-                                <label class="control-label">Welcome @Model.FirstName! I see this is your first time playing.  Its really very simple. I will display 5 questions for you.  I will also provide you with the answers.  You need to match up the questions with the answers.  Simple, right?  Click on the 'Lets Play!' button below to begin!</label>
+                                <label class="control-label">Welcome @Model.FirstName! I see this is your first time playing.  Its really very simple. I am going to pick 6 random categories.  There will be 5 questions in each category so there will be a total of 30 questions.  Each question has an assigned point total.  Select the category and I will display the 5 questions.  Type in your answers and when you are finished, I will tell you which questions you got right and which you got wrong.  I will keep track of the total number of questions you answer correctly and the total number of points you accumulated.  See, I told you it was simple.</label>
                             </div>
                             <div class="form-group">
                                 <input type="hidden" value="@Model.LastName" name="LastName"/>
@@ -26,7 +26,7 @@
                         else
                         {
                             <div class="form-group">
-                                <label class="control-label">Welcome back @Model.FirstName! Since you have played before, I won''t bother going over the instructions.  Based on your past playing, you have accumulated @Model.TotalWinnings points.  Click on the 'Continue' button below to get back to it! </label>
+                                <label class="control-label">Welcome back @Model.FirstName! Since you have played before, I won''t bother going over the instructions.  Click on the 'Continue' button below to start answering questions! </label>
                             </div>
                             <div class="form-group">
                                 <input type="hidden" value="@Model.LastName" name="LastName" />

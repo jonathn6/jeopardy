@@ -1,2 +1,142 @@
 ﻿
 @model Testing.GameSummary
+<body>
+    <h3>OK @Model.FirstName. Here is how you did in the category <br /> @Model.CategoryTitle</h3>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p> For @Model.DBValue1 points, the question was: @Model.DBQuestion1</p>
+        </div>
+        <div class="col-md-12">
+            @if (Model.gotQuestion1Right == true)
+            {
+                <p>Your answer of @Model.UserAnswer1 was CORRECT!</p>
+            }
+            else
+            {
+                <p class="text-danger">@Model.UserAnswer1</p><br />
+                <p>The answer I was looking for was @Model.DBAnswer1</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p> For @Model.DBValue2 points, the question was: @Model.DBQuestion2</p>
+        </div>
+        <div class="col-md-12">
+            @if (Model.gotQuestion2Right == true)
+            {
+                <p>Your answer of @Model.UserAnswer2 was CORRECT!</p>
+            }
+            else
+            {
+                <p class="text-danger">@Model.UserAnswer2</p><br />
+                <p>The answer I was looking for was @Model.DBAnswer2</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p> For @Model.DBValue3 points, the question was: @Model.DBQuestion3</p>
+        </div>
+        <div class="col-md-12">
+            @if (Model.gotQuestion3Right == true)
+            {
+                <p>Your answer of @Model.UserAnswer3 was CORRECT!</p>
+            }
+            else
+            {
+                <p class="text-danger">@Model.UserAnswer3</p><br />
+                <p>The answer I was looking for was @Model.DBAnswer3</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p> For @Model.DBValue4 points, the question was: @Model.DBQuestion4</p>
+        </div>
+        <div class="col-md-12">
+            @if (Model.gotQuestion4Right == true)
+            {
+                <p>Your answer of @Model.UserAnswer4 was CORRECT!</p>
+            }
+            else
+            {
+                <p class="text-danger">@Model.UserAnswer4</p><br />
+                <p>The answer I was looking for was @Model.DBAnswer4</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p> For @Model.DBValue5 points, the question was: @Model.DBQuestion5</p>
+        </div>
+        <div class="col-md-12">
+            @if (Model.gotQuestion5Right == true)
+            {
+                <p>Your answer of @Model.UserAnswer5 was CORRECT!</p>
+            }
+            else
+            {
+                <p class="text-danger">@Model.UserAnswer5</p><br />
+                <p>The answer I was looking for was @Model.DBAnswer5</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Out of @Model.TotalQuestions questions, you have answered @Model.QuestionsRight questions right and have accumulated @Model.TotalWinnings points.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
+    @using (Html.BeginForm("AnotherRound", "Game", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="hidden" value="@Model.LastName" name="LastName" />
+                    <input type="hidden" value="@Model.FirstName" name="FirstName" />
+                    <input type="hidden" value="@Model.QuestionsRight" name="QuestionsRight" />
+                    <input type="hidden" value="@Model.QuestionsWrong" name="QuestionsWrong" />
+                    <input type="hidden" value="@Model.TotalQuestions" name="TotalQuestions" />
+                    <input type="hidden" value="@Model.TotalWinnings" name="TotalWinnings" />
+                    <input type="submit" value="Play another category" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</body>
