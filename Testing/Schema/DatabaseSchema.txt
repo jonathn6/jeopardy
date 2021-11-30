@@ -1,0 +1,36 @@
+﻿CREATE DATABASE `jeopardy` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+CREATE TABLE `category` (
+  `ID` int NOT NULL,
+  `Title` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `game` (
+  `ID` int NOT NULL,
+  `PlayerOneID` int NOT NULL,
+  `PlayOneScore` double NOT NULL,
+  `PlayerTwoID` int NOT NULL,
+  `PlayTwoScore` double NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `player` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `LastName` varchar(255) NOT NULL,
+  `FirstName` varchar(255) DEFAULT NULL,
+  `QuestionsRight` int NOT NULL,
+  `QuestionsWrong` int NOT NULL,
+  `TotalQuestions` int NOT NULL,
+  `TotalWinnings` double NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `questions` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Question` varchar(255) NOT NULL,
+  `Answer` varchar(255) NOT NULL,
+  `Category_ID` int NOT NULL,
+  `Value` int NOT NULL,
+  KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3186 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
