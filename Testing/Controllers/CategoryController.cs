@@ -12,7 +12,10 @@ namespace Testing.Controllers
 {
     public class CategoryController : Controller
 
-    {
+    {       
+            // The CategoryController is used to call the API to retrieve category/question/answer information and save the data to the database. It then
+            // pushes the category ID, category Title, and player information to the View to be displayed.
+            //
         private readonly ICategoryRepository repo;
         public CategoryController(ICategoryRepository repo)
         {
@@ -20,8 +23,7 @@ namespace Testing.Controllers
         }
         [HttpPost]
         public IActionResult Index(Player person)
-        {            
-            //create API call to retrieve data from jService
+        {
             //
             // variables
             //      clientJService : The reference to the HTTPClient
@@ -33,11 +35,18 @@ namespace Testing.Controllers
             //      categoryArray : used to split jsonArray into 2 pieces.  Element 0 has data which will populate the methods in the
             //                      JServiceData class and Element 1 has the data which will populate the methods in the Category class
             //      OneCategory : Is used to hold the deserialized object returned by JsonConvert
-            //
-            var clientJService = new HttpClient();
-            var jServiceURL = "";
-            var jServiceResponse = "";
-
+            //      categoryRecordsAdded : counter to keep track of how many category records have been added
+            //      exitCategoryLoop : used to control when to exit the loop where category records are being processed
+            //      quote : used to hold a double quotation mark.  I use this in .REPLACE() functions
+            //      categoryToGet : A random number which is passed to the API to retrieve a category with that category ID
+            //      getCategoryArray : Used as a storage array to facilitate .SPLIT on the API response 
+            //      categoryToAdd : This is an instance of the Category class.  It is used to store the current category ID and the category title.  The data in 
+            //                      this instance is provided to the repository function to add a category to the database
+            //      questionArray : Used to hold the question data portion of the API response
+            //      questionsForCategory : after the API response has been parsed, we read all the questions (and the associated data) from the database to verify
+            //                      the validity of the data. 
+            //      countValidRecords : used to count the number of question records that are retrieved from the database per category
+            //      mymodel : used to pass all necessary class data to the view
             //
             // we need to pick 6 catgories to play the game.  Generate 6 random number between 1 and 10000.  Within a for loop, Use this
             // number as the offset in the API call to retrieve a category.  Then save the category data to the database table Category.
@@ -46,11 +55,19 @@ namespace Testing.Controllers
 
 
             //
-            //delete the current contents of the category table in the database
+            // delete the current contents of the category table in the database
+            // parameters passed:
+            //      D - instructions to delete
+            //      0 - Category ID to delete, 0 indicates delete all
+            //      null - Category Title to delete, if provided
             //
             repo.InsertDeleteCategory("D", 0, "");
             //
             // delete the current contents of the question table in the database
+            // parameters passed:
+            //      param(1) - I indicates insert, D indicates delete
+            //      param(2) - Question to insert, if the instruction is to insert otherwise null
+            //      param(3) - Category ID to insert, if the instruction is to insert otherwise 0
             //
             repo.InsertDeleteQuestion("D", null, 0);
             //
@@ -68,6 +85,10 @@ namespace Testing.Controllers
             var exitCategoryLoop = false;
             string quote = "\"";
 
+            var clientJService = new HttpClient();
+            var jServiceURL = "";
+            var jServiceResponse = "";
+
             do
             {
                 //
@@ -77,6 +98,9 @@ namespace Testing.Controllers
                 DateTime localDate = DateTime.Now;
                 Random rnd = new Random(localDate.Millisecond);
                 var categoryToGet = rnd.Next(1, 15000);
+                //
+                // call the API to retrieve a record with 1 category and the corresponding questions data
+                //
                 jServiceURL = "https://jservice.io/api/category?id=" + categoryToGet;
                 jServiceResponse = clientJService.GetStringAsync(jServiceURL).Result;
                 //
@@ -94,22 +118,27 @@ namespace Testing.Controllers
                 //
                 Category categoryToAdd = JsonConvert.DeserializeObject<Category>(getCategoryArray[0]);
                 //
-                // We have isolated the fields needed to insert them into the category table. Call the InsertDeleteCategory method with instructions
-                // to insert the category ID and the category Title into the database
+                // We have isolated the fields needed to insert them into the category table. First, do some data cleaning before sending data to the database
                 //
                 categoryToAdd.Title = categoryToAdd.Title.Replace("'", "");
                 categoryToAdd.Title = categoryToAdd.Title.Replace(quote,"");
+                //
+                // Call the InsertDeleteCategory method with to insert data into the Category table
+                // parameters passed:
+                //      param(1) - I indicates insert, D indicates delete
+                //      param(2) - the category ID to insert
+                //      param(3) - the category title to insert
+                //
                 repo.InsertDeleteCategory("I", categoryToAdd.ID, categoryToAdd.Title);
                 //
                 // Now parse the back half of the returned data which contains the individual questions and answers information
                 //
                 var questionArray = getCategoryArray[1].Split("},{");
+                //
+                // create an instance of the ParseQuestionJSON class and then call the public member passing it the array we received back from the API
+                //
                 var parse = new ParseQuestionJSON();
                 parse.ParseQuestion(repo, questionArray);
-
-                //
-                // the category records and the 5 corresponding question recods have been written to the database.  Verify the data.
-                //
 
                 //
                 // Retrieve all the question records from the database
@@ -117,7 +146,7 @@ namespace Testing.Controllers
                 var questionsForCategory = repo.GetGameQuestions(categoryToAdd.ID);
                 //
                 // for each record retrieved, check to verify that the question is of least a length of 3.  If it is, assume it is a valid record and
-                // bump a counter.  
+                // bump a counter.  If it is not, do not bump the counter.
                 //
 
                 var countValidRecords = 0;

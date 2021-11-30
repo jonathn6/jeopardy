@@ -31,6 +31,7 @@ namespace Testing
                     oneQuestion.answer = oneQuestion.answer.Replace(quote,"").Trim();
                     oneQuestion.answer = oneQuestion.answer.Replace("<i>","").Trim();
                     oneQuestion.answer = oneQuestion.answer.Replace("</i>", "").Trim();
+                    oneQuestion.answer = oneQuestion.answer.Replace("&", "and").Trim();
                     passedRepo.InsertDeleteQuestion("I", oneQuestion, 0);
                     recordsWritten++;
                 }
