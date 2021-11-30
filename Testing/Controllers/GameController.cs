@@ -30,10 +30,6 @@ namespace Testing.Controllers
         //          an exit game class to the view.
         //
         // 
-        //
-        // variables
-        //      clientJService : The reference to the HTTPClient
-        //
         private readonly IGameRepository repo;
 
         public GameController(IGameRepository repo)
