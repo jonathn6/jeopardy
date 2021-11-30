@@ -66,6 +66,7 @@ namespace Testing.Controllers
             //
             var categoryRecordsAdded = 0;
             var exitCategoryLoop = false;
+            string quote = "\"";
 
             do
             {
@@ -96,6 +97,8 @@ namespace Testing.Controllers
                 // We have isolated the fields needed to insert them into the category table. Call the InsertDeleteCategory method with instructions
                 // to insert the category ID and the category Title into the database
                 //
+                categoryToAdd.Title = categoryToAdd.Title.Replace("'", "");
+                categoryToAdd.Title = categoryToAdd.Title.Replace(quote,"");
                 repo.InsertDeleteCategory("I", categoryToAdd.ID, categoryToAdd.Title);
                 //
                 // Now parse the back half of the returned data which contains the individual questions and answers information

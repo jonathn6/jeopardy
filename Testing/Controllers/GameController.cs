@@ -23,9 +23,25 @@ namespace Testing.Controllers
         [HttpPost]
         public ActionResult AnotherRound(Player person)
         {
+            //
+            // This section of code sets up to retrieve the remaining categories from the database and displays them to the user for selection.
+            // If there are no more categories left in the database, the view will display a game summary.
+            //
+            var exitGame = new Finished();
             dynamic mymodel = new ExpandoObject();
-            mymodel.category = repo.GetGameCategory();
+            var tempCategory = repo.GetGameCategory();
+
+            mymodel.category = tempCategory;
+            if (tempCategory.Any())
+            {
+                exitGame.ExitGame = false;
+            }
+            else
+            {
+                exitGame.ExitGame = true;
+            }
             mymodel.player = person;
+            mymodel.exit = exitGame;
             return View(mymodel);
         }
         [HttpPost]
@@ -120,7 +136,7 @@ namespace Testing.Controllers
 
             if (userAnswer[0].ToLower() == dbAnswer[0].answer.ToLower())
             {
-                userAnswer[0] = "Your answer of " + dbAnswer[0].answer + " is correct!";
+                gameSummary.UserAnswer1 = "Your answer of " + dbAnswer[0].answer + " is correct!";
             } else
             {
                 rsult = userAnswer[0].Length > 0 ? gameSummary.UserAnswer1 = "Sorry, but your answer of " + userAnswer[0] + " is incorrect." : gameSummary.UserAnswer1 = "You did not provide an answer so obviously, your answer is incorrect";
@@ -130,7 +146,7 @@ namespace Testing.Controllers
             //
             if (userAnswer[1].ToLower() == dbAnswer[1].answer.ToLower())
             {
-                userAnswer[1] = "Your answer of " + dbAnswer[1].answer + " is correct!";
+                gameSummary.UserAnswer2 = "Your answer of " + dbAnswer[1].answer + " is correct!";
             }
             else
             {
@@ -141,7 +157,7 @@ namespace Testing.Controllers
             //
             if (userAnswer[2].ToLower() == dbAnswer[2].answer.ToLower())
             {
-                userAnswer[2] = "Your answer of " + dbAnswer[2].answer + " is correct!";
+                gameSummary.UserAnswer3 = "Your answer of " + dbAnswer[2].answer + " is correct!";
             }
             else
             {
@@ -151,7 +167,7 @@ namespace Testing.Controllers
              //
             if (userAnswer[3].ToLower() == dbAnswer[3].answer.ToLower())
             {
-                userAnswer[3] = "Your answer of " + dbAnswer[3].answer + " is correct!";
+                gameSummary.UserAnswer4 = "Your answer of " + dbAnswer[3].answer + " is correct!";
             }
             else
             {
@@ -162,7 +178,7 @@ namespace Testing.Controllers
             //
             if (userAnswer[4].ToLower() == dbAnswer[4].answer.ToLower())
             {
-                userAnswer[4] = "Your answer of " + dbAnswer[4].answer + " is correct!";
+                gameSummary.UserAnswer5 = "Your answer of " + dbAnswer[4].answer + " is correct!";
             }
             else
             {

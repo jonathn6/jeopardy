@@ -13,6 +13,7 @@ namespace Testing
             var exitloop = false;
             var loopCounter = -1;
             var recordsWritten = 0;
+            var quote = "\"";
 
             do
             {
@@ -23,10 +24,13 @@ namespace Testing
                 var tempString3 = tempString2.Replace("null", "2500");
                 var tempString4 = tempString3.Replace("\u003Ci\u003E", "");
                 var tempString5 = tempString4.Replace("\u003C/i\u003E", "");
-                var tempString6 = tempString5.Replace('"', ' ').Trim();
-                Question oneQuestion = JsonConvert.DeserializeObject<Question>(tempString6);
+                Question oneQuestion = JsonConvert.DeserializeObject<Question>(tempString5);
                 if (oneQuestion.answer != "null")
                 {
+                    oneQuestion.question = oneQuestion.question.Replace(quote,"").Trim();
+                    oneQuestion.answer = oneQuestion.answer.Replace(quote,"").Trim();
+                    oneQuestion.answer = oneQuestion.answer.Replace("<i>","").Trim();
+                    oneQuestion.answer = oneQuestion.answer.Replace("</i>", "").Trim();
                     passedRepo.InsertDeleteQuestion("I", oneQuestion, 0);
                     recordsWritten++;
                 }

@@ -1,6 +1,6 @@
 ﻿@model dynamic
 <body>
-    @if (Model.category.count > 0)
+    @if (Model.exit.ExitGame == false)
     {
         @using (Html.BeginForm("Index", "Game", FormMethod.Post))
         {
@@ -24,7 +24,7 @@
             </div>
         }
     }
-    @if (Model.category.count == 0)
+    @if (Model.exit.ExitGame == true)
     {
         <div class="row">
             <div class="col-md-12">
@@ -33,7 +33,18 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <p>You were asked a total of @Model.player.TotalQuestions.  Out of thoses, you answered correctly @Model.player.QuestionsRight times.</p>
+                @if (Model.player.QuestionsRight == 0)
+                {
+                    <p>You were asked a total of @Model.player.TotalQuestions questions.  Sorry, but you did not answer any questions correctly.</p>
+                }
+                @if (Model.player.QuestionsRight == 1)
+                {
+                    <p>You were asked a total of @Model.player.TotalQuestions questions.  Out of thoses, you answered correctly @Model.player.QuestionsRight time.</p>
+                }
+                @if (Model.player.QuestionsRight > 1)
+                {
+                    <p>You were asked a total of @Model.player.TotalQuestions questions.  Out of thoses, you answered correctly @Model.player.QuestionsRight times.</p>
+                }
             </div>
         </div>
         <div class="row">
@@ -41,5 +52,15 @@
                 <p>Your score for this game was @Model.player.TotalWinnings</p>
             </div>
         </div>
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" value="Play another game" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
     }
 </body>

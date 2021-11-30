@@ -7,7 +7,6 @@ namespace Testing
 {
     public class CategorySetup
     {
-        private readonly IGameRepository repo;
         public Game SetUpCategory(IGameRepository repo, Player person, Category passedCategory)
         {    
             //
