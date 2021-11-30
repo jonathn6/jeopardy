@@ -1,24 +1,43 @@
 ﻿
-@model dynamic
-
-<h3>@Model.Game.PlayerData.FirstName, here are your questions in the category <br /> @Model.Game.CategoryData.Title</h3>
-
-
-<table class="table">
-    <tr>
-        <th>ID</th>
-        <th>question</th>
-        <th>answer</th>
-        <th>value</th>
-    </tr>
-
-    @foreach (var question in Model.Question)
+@model Game
+<body>
+    @using (Html.BeginForm("VerifyAnswers", "Game", FormMethod.Post))
     {
-        <tr>
-            <td>@question.category_id</td>
-            <td>@question.question</td>
-            <td>@question.answer</td>
-            <td>@question.Value</td>
-        </tr>
-    }
-</table>
+        <h3>@Model.PlayerData.FirstName, here are your questions in the category <br /> @Model.CategoryData.Title</h3>
+
+
+
+        @foreach (var question in Model.QuestionData)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <p> For @question.Value points, here is the question: @question.question</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Your answer</label>
+                        <input type="text" class="form-control" name="_@question.id" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <input type="hidden" value="@Model.PlayerData.LastName" name="LastName" />
+            <input type="hidden" value="@Model.PlayerData.FirstName" name="FirstName" />
+            <input type="hidden" value="@Model.PlayerData.QuestionsRight" name="QuestionsRight" />
+            <input type="hidden" value="@Model.PlayerData.QuestionsWrong" name="GamesLost" />
+            <input type="hidden" value="@Model.PlayerData.TotalQuestions" name="TotalQuestions" />
+            <input type="hidden" value="@Model.PlayerData.TotalWinnings" name="TotalWinnings" />
+            <input type="hidden" value="@Model.CategoryData.ID" name="CategoryID" />
+            <input type="hidden" value="@Model.CategoryData.Title" name="CategoryTitle" />
+            <input type="submit" value="Submit your answers" class="btn btn-primary" />
+        </div>
+        }
+</body>

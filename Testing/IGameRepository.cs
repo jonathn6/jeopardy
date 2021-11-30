@@ -12,5 +12,7 @@ namespace Testing
         public void InsertDeleteCategory(string WhichFunction, int Category, string CategoryTitle);
         public IEnumerable<Question> GetGameQuestions(int CategoryID);
         public void InsertDeleteQuestion(string WhichFunction, Question QuestionToInsert, int CategoryID);
+        public Answer GetSingleAnswer(int ID);
+        public void UpdatePlayer(Player person);
     }
 }

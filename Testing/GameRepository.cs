@@ -90,5 +90,19 @@ namespace Testing
             }
         }
 
+        public Answer GetSingleAnswer(int ID)
+        {
+            var SQL = "SELECT Question, Answer, Value FROM jeopardy.QUESTIONS WHERE ID = " + ID;
+            return _conn.QuerySingle<Answer>(SQL);
+        }
+
+        public void UpdatePlayer(Player person)
+        {
+            _conn.Execute("UPDATE jeopardy.player SET QuestionsRight = @right, QuestionsWrong = @wrong, TotalQuestions = @totalq, TotalWinnings = @totalw;",
+                            new { right = person.QuestionsRight,
+                                    wrong = person.QuestionsWrong,
+                                    totalq = person.TotalQuestions,
+                                    totalw = person.TotalWinnings});
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Testing
         }
         public void WritePlayer(string passedLastName, string passedFirstName)
         {
-            var SQL = "INSERT INTO jeopardy.player (LastName, FirstName, GamesWon, GamesLost, GamesStarted, TotalWinnings) VALUES ('" + passedLastName + "','" + passedFirstName + "', 0, 0, 0, 0)";
+            var SQL = "INSERT INTO jeopardy.player (LastName, FirstName, QuestionsRight, QuestionsWrong, TotalQuestions, TotalWinnings) VALUES ('" + passedLastName + "','" + passedFirstName + "', 0, 0, 0, 0)";
             _conn.Execute(SQL);
             return;
         }

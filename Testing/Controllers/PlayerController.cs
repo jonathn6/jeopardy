@@ -34,9 +34,9 @@ namespace Testing.Controllers
                 repo.WritePlayer(lastName, firstName);
                 callPlayer.LastName = lastName;
                 callPlayer.FirstName = firstName;
-                callPlayer.GamesLost = 0;
-                callPlayer.GamesWon = 0;
-                callPlayer.GamesStarted = 0;
+                callPlayer.QuestionsRight = 0;
+                callPlayer.QuestionsWrong = 0;
+                callPlayer.TotalQuestions = 0;
                 callPlayer.TotalWinnings = 0;
             }
 
